@@ -13,7 +13,7 @@ for i in f:
 del list_txt[0]                         #删除列表中的第一个元素，因为服务器代码列表文件中第一行是独白
 f.close()                               #关闭文件
 
-speedtestshell = "python3 ./speedtest.py --server "     #命令行参数
+speedtestshell = "python3 ./speedtest.py"     #命令行参数
 
 
 subprocess.getoutput("echo '' > log.txt")               #清空log.txt中的日志，没有顺便创建该文件
@@ -23,13 +23,12 @@ while number:
 #while True:
     for i in list_txt:
         if i == '':     #判断取到是否为空
-            #print(subprocess.getoutput("python3 ./speedtest.py"))
-            stu = subprocess.getoutput("python3 ./speedtest.py")
+            #print(subprocess.getoutput(speedtestshell))
+            stu = subprocess.getoutput(speedtestshell)
         else:
-            shellall = speedtestshell+i
-            #print(subprocess.getoutput(shellall))
+            #print(subprocess.getoutput(speedtestshell+" --server "+i))
             #print("---------------------------------------------------------------"+"\n")
-            stu = subprocess.getoutput(shellall)
+            stu = subprocess.getoutput(speedtestshell+" --server "+i)
         time_new = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         subprocess.getoutput('echo "%s\n服务器代码：%s\n测试时间：%s\n" >> log.txt' % (stu,i,time_new))
         number -= 1        #每完成一个就减一，当number=0时完成一个周期，此时因number=0不会再次进入循环，脚本结束。
